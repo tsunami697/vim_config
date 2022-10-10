@@ -16,10 +16,18 @@ set_vimconfig()
 	cp dotvimrc ~/.vimrc
 }
 
+set_ycm()
+{
+	cd ~/.vimr/bundle/YouCompleteMe
+	/usr/bin/python3 install.py --clang-completer
+	cp ~/.vim/bundle/YouCompleteMe/third_party/ycmd/examples/.ycm_extra_conf.py ~/.vim/
+}
+
 start()
 {
 	set_tools
 	set_bundle
+	set_ycm
 	set_vimconfig
 }
 

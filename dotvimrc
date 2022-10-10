@@ -40,6 +40,9 @@ nmap <C-\>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
 nmap <C-\>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
 nmap <C-\>d :cs find d <C-R>=expand("<cword>")<CR><CR>
 
+nmap <silent> <F5> :cs find s <C-R>=expand("<cword>")<CR><CR>
+nmap <silent> <F6> :cs find t <C-R>=expand("<cword>")<CR><CR>
+nmap <silent> <F7> :cs find c <C-R>=expand("<cword>")<CR><CR>
 "cscope生成文件，使用快捷键临时生效
 nmap <F10> :!find . -iname '*.c' -o -iname '*.cpp' -o -iname '*.h' -o -iname '*.hpp' > cscope.files ;<CR>
 	\:!cscope -b -i cscope.files -f cscope.out<CR>
@@ -81,7 +84,7 @@ Bundle 'jiangmiao/auto-pairs'
 Bundle 'klen/python-mode'
 Bundle 'Valloric/ListToggle'
 Bundle 'SirVer/ultisnips'
-"Bundle 'ycm-core/YouCompleteMe'
+Bundle 'Valloric/YouCompleteMe'
 Bundle 'scrooloose/syntastic'
 Bundle 't9md/vim-quickhl'
 "Bundle 'scrooloose/merdcommenter'
@@ -96,6 +99,8 @@ Plugin 'brookhong/cscope.vim'
 Plugin 'Yggdroot/LeaderF'
 Plugin 'ludovicchabant/vim-gutentags'
 Plugin 'junegunn/fzf'
+Plugin 'w0rp/ale'
+Plugin 'majutsushi/tagbar'
 
 "-----------------------------------------------------color设置-----------------------------------------------------------
 "set highlight
@@ -109,13 +114,45 @@ highlight Comment ctermfg=green	"注释颜色
 set fileencodings=utf-8,gb2312,gbk,gb18030
 "set termencoding=utf-8
 "set encoding=prc
+set autowrite
+
+"-----------------------------------------------------ale设置-----------------------------------------------------------
+"实时代码检测工具
+let g:ale_sign_column_always = 1
+let g:ale_sign_error = 'e'
+let g:ale_sign_warning='w'
+let g:ale_statusline_format=['	%d', '	%d', '	OK']
+let g:ale_echo_msg_format='[%linter] %code: %%s'
+let g:ale_lint_on_text_changed='normal'
+let g:ale_lint_on_insert_leave=1
+let g:ale_c_gcc_options='-Wall -O2 -std=c99'
+let g:ale_cpp_gcc_options='-Wall -O2 -std=c++14'
+let g:ale_c_cppcheck_options=''
+let g:ale_cpp_cppcheck_options=''
+
+"-----------------------------------------------------tagbar设置-----------------------------------------------------------
+let g:tagbar_width=25
+autocmd BufReadPost *.cpp, *.c, *.h, *.cc, *.cxx call tagbar#autoopen()
+let g:tagbar_autopreview=1
+nmap <F9> :TagbarToggle<CR>
+
+"-----------------------------------------------------ycm设置-----------------------------------------------------------
+let g:ycm_server_python_interpreter='/usr/bin/python3'
+let g:ycm_global_ycm_extra_conf='~/.vim/.ycm_extra_conf.py'
+
 
 "-----------------------------------------------------NERDTree配置-----------------------------------------------------------
 "NERDTree开启快捷键
 map <F8> :NERDTree<CR>
 "默认开启
 autocmd VimEnter * NERDTree
-"在目录框使用shift+i显示隐藏文件
+
+autocmd StdinReadPre * let s:std_in=1
+"autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+let NREDTreeWinSize=15
+let NERDTreeShowLineNumbers=1
+let NERDTreeAutoCenter=1
+let NERDTreeShowBookmarks=1
 
 "-------------------------------------------------------快捷键------------------------------------------------------------
 nnoremap <F1> :set nonumber!<CR>:set foldcolumn=0<CR>
@@ -124,10 +161,13 @@ nnoremap <F3> :set mouse=a<CR>
 map <C-A> ggVG
 
 "gtrans
-nmap <C-t> :Gtrans<CR>
-imap <C-t> <ESC>:Gtrans<CR>i
-vmap <C-t> :call Gtrans()<CR>
+"nmap <C-t> :Gtrans<CR>
+"imap <C-t> <ESC>:Gtrans<CR>i
+"vmap <C-t> :call Gtrans()<CR>
 
+nmap <C-t> :Translate<CR>
+imap <C-t> <ESC>:Translate<CR>i
+vmap <C-t> :call Translate()<CR>
 "-------------------------------------------------------其他待整理--------------------------------------------------------
 "翻译为，默认为简体中文
 let g:translator_source_lang = 'zh'
