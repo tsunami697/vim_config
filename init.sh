@@ -18,7 +18,7 @@ set_vimconfig()
 
 set_ycm()
 {
-	cd ~/.vimr/bundle/YouCompleteMe
+	cd ~/.vim/bundle/YouCompleteMe
 	/usr/bin/python3 install.py --clang-completer
 	cp ~/.vim/bundle/YouCompleteMe/third_party/ycmd/examples/.ycm_extra_conf.py ~/.vim/
 }
@@ -26,9 +26,11 @@ set_ycm()
 start()
 {
 	set_tools
-	set_bundle
-	set_ycm
 	set_vimconfig
+	set_bundle
+
+	# 执行PlugingInstall后执行
+	set_ycm
 }
 
 start
