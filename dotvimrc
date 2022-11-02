@@ -145,7 +145,7 @@ let g:ycm_global_ycm_extra_conf='~/.vim/.ycm_extra_conf.py'
 "NERDTree开启快捷键
 map <F8> :NERDTree<CR>
 "默认开启
-autocmd VimEnter * NERDTree
+"autocmd VimEnter * NERDTree
 
 autocmd StdinReadPre * let s:std_in=1
 "autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif

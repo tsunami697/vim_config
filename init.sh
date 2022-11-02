@@ -8,6 +8,7 @@ set_tools()
 
 set_bundle()
 {
+	rm -rf ~/.vim/
 	git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/vundle/
 }
 
