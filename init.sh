@@ -29,12 +29,12 @@ start()
 	set_tools
 	set_vimconfig
 	set_bundle
-
-	# 执行PlugingInstall后执行
-	set_ycm
 }
 
+#start 执行，安装了vundle插件管理工具；
+#接着打开vim，输入 :PluginInstall进行安装所有插件,速度较慢
 start
 
-#上述代码执行后，安装了vundle插件管理工具；
-#接着打开vim，输入 :PluginInstall进行安装所有插件
+#在插件安装完成后，注释start,取消注释set_ycm,单独执行set_ycm,配置ycm
+#set_ycm
+
